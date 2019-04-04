@@ -1,5 +1,0 @@
-sudo: false
-before_script:
-  - redis-server --port 6379 &
-script:
-  - sleep 120

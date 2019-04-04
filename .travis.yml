@@ -1,0 +1,7 @@
+sudo: false
+before_script:
+  - redis-server --port 6379 &
+script:
+  - cat /etc/redis/redis.conf
+  - sleep 10
+  - redis-cli -h 127.0.0.1 -p 6379 cluster slots
