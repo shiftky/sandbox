@@ -1,7 +1,14 @@
 sudo: false
 before_script:
-  - redis-server --port 6379 &
+  - redis-server --cluster-enabled yes --cluster-config-file 7000-nodes.conf --port 7000 &
+  - redis-server --cluster-enabled yes --cluster-config-file 7001-nodes.conf --port 7001 &
+  - redis-server --cluster-enabled yes --cluster-config-file 7002-nodes.conf --port 7002 &
+  - redis-server --cluster-enabled yes --cluster-config-file 7003-nodes.conf --port 7003 &
+  - redis-server --cluster-enabled yes --cluster-config-file 7004-nodes.conf --port 7004 &
+  - redis-server --cluster-enabled yes --cluster-config-file 7005-nodes.conf --port 7005 &
+  - sleep 3
+  - echo yes | redis-cli --cluster create 127.0.0.1:7000 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005 --cluster-replicas 1 -x
 script:
-  - cat /etc/redis/redis.conf
-  - sleep 10
-  - redis-cli -h 127.0.0.1 -p 6379 cluster slots
+  - redis-cli -h 127.0.0.1 -p 7000 cluster info
+  - redis-cli -h 127.0.0.1 -p 7000 cluster nodes
+  - redis-cli -h 127.0.0.1 -p 7000 cluster slots
