@@ -1,4 +1,8 @@
 sudo: false
+addons:
+  apt:
+    packages:
+      - redis-server
 before_script:
   - redis-server --cluster-enabled yes --cluster-config-file 7000-nodes.conf --port 7000 &
   - redis-server --cluster-enabled yes --cluster-config-file 7001-nodes.conf --port 7001 &
